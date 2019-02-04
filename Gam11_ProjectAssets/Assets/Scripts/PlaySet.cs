@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlaySet : MonoBehaviour {
-	GameObject puntos, h1, h2, h3, fon, pearn, hi, contro, lota; Text tp; int counter = 0; int points = 0, hip = 0; public bool vidachange;
+	GameObject puntos, h1, h2, h3, fon, pearn, hi, contro, lota; Text tp; float counter = 1.0f; int points = 0, hip = 0; public bool vidachange;
 	public int vidas = 3; Image sfo; public bool gameover = false; GameObject govac; Text pearnt, hit; 
 	void Start () {
 		lota = GameObject.Find("Lota");
@@ -38,6 +39,9 @@ public class PlaySet : MonoBehaviour {
 		h3.SetActive(true);
 	}
 	void Update () {
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			SceneManager.LoadScene("Menu");
+		}
 		if (gameover == false){
 			if (vidas == 2){
 				h1.SetActive(false);
@@ -68,8 +72,8 @@ public class PlaySet : MonoBehaviour {
 					hit.text = "Hi: " + hip.ToString();
 				}
 			}
-			counter = counter + 1;
-			if (counter == 60){
+			counter = counter - Time.deltaTime;
+			if (counter <= 0.0f){
 				points = points + 1;
 				if (points == 1){
 					tp.text = "1 Point";
@@ -78,7 +82,7 @@ public class PlaySet : MonoBehaviour {
 					string strpoi = points.ToString();
 					tp.text = strpoi + " Points";
 				}
-				counter = 0;
+				counter = 1.0f;
 			}
 		}
 	}
